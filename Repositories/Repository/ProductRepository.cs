@@ -1,0 +1,49 @@
+﻿using Microsoft.EntityFrameworkCore;
+using NorthwindBasedWebAPI.Models;
+using NorthwindBasedWebAPI.Repositories.Base;
+using NorthwindBasedWebAPI.Data;
+using NorthwindBasedWebAPI.Repositories.IRepository;
+
+namespace NorthwindBasedWebApplication.API.Repositories.Repository
+{
+    public class ProductRepository : EntityBaseRepository<Product>, IProductRepository
+    {
+
+        private readonly ApplicationDbContext _context;
+
+        public ProductRepository(ApplicationDbContext context) : base(context)
+        {
+            _context = context;
+        }
+
+        public async Task<Category> GetCategoryByProductAsync(int id)
+        {
+            var category = await _context.Products
+                .Where(i => i.Id == id)
+                .Select(c => c.Category)
+                .FirstOrDefaultAsync();
+
+            return category;
+        }
+
+        public async Task<ICollection<Order>> GetOrdersByProductAsync(int id)
+        {
+            var orders = await _context.OrderDetails
+                .Where(i => i.ProductId == id)
+                .Select(o => o.Order)
+                .ToListAsync();
+
+            return orders;
+        }
+
+        public async Task<Supplier> GetSupplierByProductAsync(int id)
+        {
+            var supplier = await _context.Products
+                .Where(i => i.Id == id)
+                .Select(s => s.Supplier)
+                .FirstOrDefaultAsync();
+
+            return supplier;
+        }
+    }
+}
