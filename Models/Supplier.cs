@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NorthwindBasedWebAPI.Models.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace NorthwindBasedWebAPI.Models
 {
-    public class Supplier
+    public class Supplier : BaseEntity
     {
         [Required(ErrorMessage = "Company name is required field!")]
         [Display(Name = "Company Name")]
@@ -69,5 +70,8 @@ namespace NorthwindBasedWebAPI.Models
 
         [Display(Name = "Picture")]
         public string? PictureUrl { get; set; }
+
+
+        public ICollection<Product> Products { get; set; }
     }
 }

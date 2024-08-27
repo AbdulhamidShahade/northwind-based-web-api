@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using NorthwindBasedWebAPI.Models.Base;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NorthwindBasedWebAPI.Models
 {
-    public class CustomerCustomerDemographic
+    public class CustomerCustomerDemographic : BaseEntity
     {
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }

@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using NorthwindBasedWebAPI.Models.Base;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NorthwindBasedWebAPI.Models
 {
-    public class EmployeeTerritory
+    public class EmployeeTerritory : BaseEntity
     {
         [ForeignKey("Employee")]
         public int EmployeeId { get; set; }

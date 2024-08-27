@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NorthwindBasedWebAPI.Models.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace NorthwindBasedWebAPI.Models
 {
-    public class Region
+    public class Region : BaseEntity
     {
         [Required(ErrorMessage = "Region description is required!")]
         [Display(Name = "Region Description")]
@@ -12,5 +13,8 @@ namespace NorthwindBasedWebAPI.Models
 
         [Display(Name = "Picture")]
         public string? PictureUrl { get; set; }
+
+
+        public ICollection<Territory> Territories { get; set; }
     }
 }

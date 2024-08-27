@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NorthwindBasedWebAPI.Models.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace NorthwindBasedWebAPI.Models
 {
-    public class Category
+    public class Category : BaseEntity
     {
         [Display(Name = "Category Name")]
         [Required(ErrorMessage = "Category name is required field!")]
@@ -17,5 +18,8 @@ namespace NorthwindBasedWebAPI.Models
 
         [Display(Name = "Picture")]
         public string? PictureUrl { get; set; }
+
+
+        public ICollection<Product>? Products { get; set; }
     }
 }

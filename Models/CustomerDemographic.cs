@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NorthwindBasedWebAPI.Models.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace NorthwindBasedWebAPI.Models
 {
-    public class CustomerDemographic
+    public class CustomerDemographic : BaseEntity
     {
         [Display(Name = "Customer Description")]
         public string? CustomerDescription { get; set; }
@@ -11,5 +12,8 @@ namespace NorthwindBasedWebAPI.Models
 
         [Display(Name = "Picture")]
         public string? PictureUrl { get; set; }
+
+
+        public ICollection<CustomerCustomerDemographic> CustomerCustomerDemographic { get; set; }
     }
 }

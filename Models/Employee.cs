@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NorthwindBasedWebAPI.Models.Base;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NorthwindBasedWebAPI.Models
 {
-    public class Employee
+    public class Employee : BaseEntity
     {
         [Display(Name = "Last Name")]
         [Required(ErrorMessage = "Last name is required field!")]
@@ -88,5 +90,18 @@ namespace NorthwindBasedWebAPI.Models
 
         [Display(Name = "Notes")]
         public string? Notes { get; set; }
+
+
+        [Display(Name = "Reports To")]
+        [ForeignKey("Report")]
+        public int? ReportsTo { get; set; }
+        public Employee? Report { get; set; }
+
+
+        public ICollection<EmployeeTerritory> EmployeeTerritory { get; set; }
+
+
+
+        public ICollection<Order> Orders { get; set; }
     }
 }

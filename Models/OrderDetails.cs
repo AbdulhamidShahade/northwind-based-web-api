@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using NorthwindBasedWebAPI.Models.Base;
 
 namespace NorthwindBasedWebAPI.Models
 {
-    public class OrderDetails
+    public class OrderDetails : BaseEntity
     {
         [Display(Name = "Unit Price")]
         [Required(ErrorMessage = "Unit Price is required field!")]

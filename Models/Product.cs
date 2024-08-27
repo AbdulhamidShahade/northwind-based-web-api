@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NorthwindBasedWebAPI.Models.Base;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NorthwindBasedWebAPI.Models
 {
-    public class Product
+    public class Product : BaseEntity
     {
         [Required(ErrorMessage = "Product name is required field!")]
         [Display(Name = "Product Name")]
@@ -48,5 +50,24 @@ namespace NorthwindBasedWebAPI.Models
 
         [Display(Name = "Picture")]
         public string? PictureUrl { get; set; }
+
+
+        [Required(ErrorMessage = "Category Id is required field!")]
+        [Display(Name = "Category Id")]
+        [ForeignKey("Category")]
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
+
+
+
+        [Display(Name = "Supplier Id")]
+        [ForeignKey("Supplier")]
+        [Required(ErrorMessage = "Supplier Id is required field!")]
+        public int SupplierId { get; set; }
+        public Supplier Supplier { get; set; }
+
+
+
+        public ICollection<OrderDetails> OrderDetails { get; set; }
     }
 }
