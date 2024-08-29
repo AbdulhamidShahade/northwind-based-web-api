@@ -9,6 +9,10 @@ namespace NorthwindBasedWebAPI.Models.Base
         public int Id { get; set; }
         public DateTime CreatedAt
         {
+            set
+            {
+                value = DateTime.UtcNow;
+            }
             get
             {
                 return DateTime.UtcNow;
@@ -16,6 +20,10 @@ namespace NorthwindBasedWebAPI.Models.Base
         }
         public DateTime? UpdatedAt
         {
+            set
+            {
+                value = DateTime.UtcNow;
+            }
             get
             {
                 return DateTime.UtcNow;
