@@ -432,8 +432,6 @@ namespace NorthwindBasedWebApplication.API.Controllers
 
             var employeeModel = _mapper.Map<Employee>(createEmployeeDto);
 
-            employeeModel.ReportsTo = reportsTo;
-
 
             var createdEmployee = await _employeeRepository.CreateAsync(employeeModel);
 
@@ -661,8 +659,6 @@ namespace NorthwindBasedWebApplication.API.Controllers
             }
 
             var employeeModel = _mapper.Map<Employee>(updateEmployeeDto);
-
-            employeeModel.ReportsTo = reportsTo;
 
             var updatedEmployee = await _employeeRepository.UpdateAsync(employeeModel);
 

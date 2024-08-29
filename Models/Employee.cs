@@ -92,12 +92,6 @@ namespace NorthwindBasedWebAPI.Models
         public string? Notes { get; set; }
 
 
-        [Display(Name = "Reports To")]
-        [ForeignKey("Report")]
-        public int? ReportsTo { get; set; }
-        public Employee? Report { get; set; }
-
-
         public ICollection<EmployeeTerritory> EmployeeTerritory { get; set; }
 
 
