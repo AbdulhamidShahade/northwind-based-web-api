@@ -1,7 +1,7 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 
-namespace NorthwindBasedWebApplication.API.Models.DTOs.SupplierDTOs
+namespace NorthwindBasedWebAPI.Models.Dtos.SupplierDtos
 {
     public class UpdateSupplierDto
     {
