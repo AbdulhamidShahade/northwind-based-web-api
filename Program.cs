@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NorthwindBasedWebAPI.Data;
+using NorthwindBasedWebAPI.Models;
 using NorthwindBasedWebAPI.Repositories.IRepository;
 using NorthwindBasedWebApplication.API.Repositories.Repository;
 using Serilog;
@@ -38,6 +40,11 @@ builder.Host.UseSerilog((context, configuration) =>
 {
     configuration.ReadFrom.Configuration(context.Configuration);
 });
+
+
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
 
 var app = builder.Build();
