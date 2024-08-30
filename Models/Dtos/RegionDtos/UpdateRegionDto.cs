@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NorthwindBasedWebApplication.API.Models.DTOs.RegionDTO
+namespace NorthwindBasedWebAPI.Models.Dtos.RegionDtos
 { 
     public class UpdateRegionDto
     {
