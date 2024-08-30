@@ -1,17 +1,16 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using NorthwindBasedWebApplication.API.Models.DTOs.RegionDTO;
-using NorthwindBasedWebApplication.API.Models.DTOs.RegionDTOs;
 using NorthwindBasedWebApplication.API.Models;
 using System.Net;
-using NorthwindBasedWebApplication.API.Models.DTOs.TerritoryDTOs;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using NorthwindBasedWebAPI.Repositories.IRepository;
 using NorthwindBasedWebAPI.Models.Common;
 using NorthwindBasedWebAPI.Models;
+using NorthwindBasedWebAPI.Models.Dtos.RegionDtos;
+using NorthwindBasedWebAPI.Models.Dtos.TerritoryDtos;
 
-namespace NorthwindBasedWebApplication.API.Controllers
+namespace NorthwindBasedWebAPI.Controllers
 {
 
     [ApiController]
