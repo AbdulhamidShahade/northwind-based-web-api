@@ -331,8 +331,7 @@ namespace NorthwindBasedWebAPI.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<ApiResponse>> CreateEmployee([FromQuery] int? reportsTo,
-            [FromBody] CreateEmployeeDto createEmployeeDto)
+        public async Task<ActionResult<ApiResponse>> CreateEmployee([FromBody] CreateEmployeeDto createEmployeeDto)
         {
 
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
@@ -495,7 +494,7 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult<ApiResponse>> UpdateEmployee(int id, [FromQuery] int? reportsTo,
+        public async Task<ActionResult<ApiResponse>> UpdateEmployee(int id,
             [FromBody]UpdateEmployeeDto updateEmployeeDto)
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
