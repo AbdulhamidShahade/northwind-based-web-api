@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NorthwindBasedWebApplication.API.Models.DTOs.CategoryDTOs
+namespace NorthwindBasedWebAPI.Models.Dtos.CategoryDtos
 {
     public class UpdateCategoryDto
     {
