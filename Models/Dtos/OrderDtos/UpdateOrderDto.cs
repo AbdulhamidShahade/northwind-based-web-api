@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace NorthwindBasedWebApplication.API.Models.DTOs.OrderDTOs
+namespace NorthwindBasedWebAPI.Models.Dtos.OrderDtos
 {
     public class UpdateOrderDto
     {
