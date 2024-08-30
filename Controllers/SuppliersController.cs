@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using NorthwindBasedWebApplication.API.Models.DTOs.SupplierDTOs;
 using NorthwindBasedWebApplication.API.Models;
 using System.Net;
-using NorthwindBasedWebApplication.API.Models.DTOs.ProductDTOs;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using NorthwindBasedWebAPI.Repositories.IRepository;
 using NorthwindBasedWebAPI.Models.Common;
 using NorthwindBasedWebAPI.Models;
+using NorthwindBasedWebAPI.Models.Dtos.SupplierDtos;
+using NorthwindBasedWebAPI.Models.Dtos.ProductDtos;
 
-namespace NorthwindBasedWebApplication.API.Controllers
+namespace NorthwindBasedWebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
