@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NorthwindBasedWebApplication.API.Models.DTOs.CustomerDTOs
+namespace NorthwindBasedWebAPI.Models.Dtos.CustomerDtos
 {
     public class CreateCustomerDto
     {
