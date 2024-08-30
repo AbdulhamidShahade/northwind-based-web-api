@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using NorthwindBasedWebApplication.API.Models.DTOs.ProductDTOs;
 using System.Net;
-using NorthwindBasedWebApplication.API.Models.DTOs.CategoryDTOs;
-using NorthwindBasedWebApplication.API.Models.DTOs.SupplierDTOs;
-using NorthwindBasedWebApplication.API.Models.DTOs.OrderDTOs;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using NorthwindBasedWebAPI.Repositories.IRepository;
 using NorthwindBasedWebAPI.Models.Common;
 using NorthwindBasedWebAPI.Models;
+using NorthwindBasedWebAPI.Models.Dtos.ProductDtos;
+using NorthwindBasedWebAPI.Models.Dtos.SupplierDtos;
+using NorthwindBasedWebAPI.Models.Dtos.CategoryDtos;
+using NorthwindBasedWebAPI.Models.Dtos.OrderDtos;
 
-namespace NorthwindBasedWebApplication.API.Controllers
+namespace NorthwindBasedWebAPI.Controllers
 {
 
     [ApiController]
