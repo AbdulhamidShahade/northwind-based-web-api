@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace NorthwindBasedWebApplication.API.Models.DTOs.ProductDTOs
+namespace NorthwindBasedWebAPI.Models.Dtos.ProductDtos
 {
     public class UpdateProductDto
     {

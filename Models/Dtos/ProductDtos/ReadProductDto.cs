@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace NorthwindBasedWebApplication.API.Models.DTOs.ProductDTOs
+namespace NorthwindBasedWebAPI.Models.Dtos.ProductDtos
 {
     public class ReadProductDto
     {
