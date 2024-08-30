@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
-using NorthwindBasedWebApplication.API.Models.DTOs.CategoryDTOs;
-using NorthwindBasedWebApplication.API.Models.DTOs.CustomerDemographicDTOs;
-using NorthwindBasedWebApplication.API.Models.DTOs.CustomerDTOs;
-using NorthwindBasedWebApplication.API.Models.DTOs.EmployeeDTOs;
-using NorthwindBasedWebApplication.API.Models.DTOs.OrderDTOs;
-using NorthwindBasedWebApplication.API.Models.DTOs.ProductDTOs;
-using NorthwindBasedWebApplication.API.Models.DTOs.RegionDTO;
-using NorthwindBasedWebApplication.API.Models.DTOs.RegionDTOs;
-using NorthwindBasedWebApplication.API.Models.DTOs.ShipperDTOs;
-using NorthwindBasedWebApplication.API.Models.DTOs.SupplierDTOs;
-using NorthwindBasedWebApplication.API.Models.DTOs.TerritoryDTOs;
+
 using NorthwindBasedWebApplication.API.Models;
 using NorthwindBasedWebAPI.Models;
+using NorthwindBasedWebAPI.Models.Dtos.CategoryDtos;
+using NorthwindBasedWebAPI.Models.Dtos.CustomerDtos;
+using NorthwindBasedWebAPI.Models.Dtos.CustomerDemographicDtos;
+using NorthwindBasedWebAPI.Models.Dtos.EmployeeDtos;
+using NorthwindBasedWebAPI.Models.Dtos.OrderDtos;
+using NorthwindBasedWebAPI.Models.Dtos.ProductDtos;
+using NorthwindBasedWebAPI.Models.Dtos.RegionDtos;
+using NorthwindBasedWebAPI.Models.Dtos.ShipperDtos;
+using NorthwindBasedWebAPI.Models.Dtos.SupplierDtos;
+using NorthwindBasedWebAPI.Models.Dtos.TerritoryDtos;
 
-namespace NorthwindBasedWebApplication.API.Common.Profiles
+namespace NorthwindBasedWebAPI.Common.Profiles
 {
     public class MappingConfig : Profile
     {
