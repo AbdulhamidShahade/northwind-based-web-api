@@ -364,3 +364,5 @@ FodyWeavers.xsd
 
 
 .svn/
+appsettings.json
+appsettings.development.json
