@@ -1,10 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using NorthwindBasedWebAPI.Models;
 
 namespace NorthwindBasedWebAPI.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
     {
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Customer> Customers { get; set; }
