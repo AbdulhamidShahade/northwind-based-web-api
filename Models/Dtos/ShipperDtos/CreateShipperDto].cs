@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NorthwindBasedWebApplication.API.Models.DTOs.ShipperDTOs
+namespace NorthwindBasedWebAPI.Models.Dtos.ShipperDtos
 {
     public class CreateShipperDto
     {
