@@ -1,7 +1,7 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 
-namespace NorthwindBasedWebApplication.API.Models.DTOs.TerritoryDTOs
+namespace NorthwindBasedWebAPI.Models.Dtos.TerritoryDtos
 {
     public class ReadTerritoryDto
     {
