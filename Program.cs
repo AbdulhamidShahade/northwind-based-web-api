@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -6,8 +7,12 @@ using Microsoft.OpenApi.Models;
 using NorthwindBasedWebAPI.Data;
 using NorthwindBasedWebAPI.Models;
 using NorthwindBasedWebAPI.Repositories.IRepository;
+using NorthwindBasedWebAPI.Repositories.Repository;
 using NorthwindBasedWebApplication.API.Repositories.Repository;
 using Serilog;
+using Serilog.Sinks.MSSqlServer;
+using System.Collections.ObjectModel;
+using System.Data;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -76,7 +81,8 @@ builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<ITerritoryRepository, TerritoryRepository>();
 builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
 builder.Services.AddScoped<IAuthorizationRepository, AuthorizationRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();;
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ILogRepository, LogRepository>();
 
 
 
@@ -109,19 +115,45 @@ builder.Services.AddAuthentication(x =>
         };
     });
 
-
-
-//My fucking comment will be here.!
-
-
-
-builder.Host.UseSerilog((context, configuration) =>
+var columnOptions = new ColumnOptions
 {
-    configuration.ReadFrom.Configuration(context.Configuration);
-});
+    AdditionalColumns = new List<SqlColumn>
+    {
+        new SqlColumn { ColumnName = "MethodType", DataType = SqlDbType.NVarChar, DataLength = 50 },
+        new SqlColumn { ColumnName = "User", DataType = SqlDbType.NVarChar, DataLength = 100 },
+        new SqlColumn { ColumnName = "Role", DataType = SqlDbType.NVarChar, DataLength = 50 },
+        new SqlColumn { ColumnName = "Details", DataType = SqlDbType.NVarChar, DataLength = 500 },
+        new SqlColumn { ColumnName = "StatusCode", DataType = SqlDbType.NVarChar, DataLength = 30 },
+        new SqlColumn { ColumnName = "Success", DataType = SqlDbType.Bit },
+        new SqlColumn { ColumnName = "Failed", DataType = SqlDbType.Bit },
+        new SqlColumn { ColumnName = "ErrorMessage", DataType = SqlDbType.NVarChar, DataLength = 500 },
+        new SqlColumn { ColumnName = "CreatedAt", DataType = SqlDbType.Date }
+    }
+};
+
+columnOptions.Store.Remove(StandardColumn.Exception);
+columnOptions.Store.Remove(StandardColumn.Properties);
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Fatal)
+    .MinimumLevel.Override("System", Serilog.Events.LogEventLevel.Fatal)
+    .WriteTo.MSSqlServer(
+        connectionString: "Data Source=ABDULHAMIT;Initial Catalog=northwind-based-web-api;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False",
+        tableName: "SystemLogs",
+        autoCreateSqlTable: true,
+        columnOptions: columnOptions
+    )
+    .CreateLogger();
+
+
+
+
+builder.Host.UseSerilog();
 
 
 var app = builder.Build();
+
 
 
 
