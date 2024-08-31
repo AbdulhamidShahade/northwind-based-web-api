@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NorthwindBasedWebAPI.Repositories.IRepository;
 
 namespace NorthwindBasedWebAPI.Controllers
@@ -18,7 +17,7 @@ namespace NorthwindBasedWebAPI.Controllers
         [HttpGet]
         public IActionResult GetLogs()
         {
-            var logs = _logRepository.GetLogs();
+            var logs = _logRepository.GetAll();
 
             return Ok(logs);
         }

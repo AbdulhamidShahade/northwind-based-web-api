@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NorthwindBasedWebApplication.API.Models;
 using System.Net;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -40,7 +39,7 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin,Customer")]
-        
+
         public async Task<ActionResult<ApiResponse>> GetCategories()
         {
 

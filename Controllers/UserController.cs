@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using NorthwindBasedWebAPI.Models;
 using NorthwindBasedWebAPI.Models.Common;
 using NorthwindBasedWebAPI.Repositories.IRepository;
-using NorthwindBasedWebApplication.API.Models;
 
 namespace NorthwindBasedWebAPI.Controllers
 {

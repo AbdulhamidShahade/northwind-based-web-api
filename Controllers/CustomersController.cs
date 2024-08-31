@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using NorthwindBasedWebApplication.API.Models;
 using System.Net;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;

@@ -5,7 +5,6 @@ using NorthwindBasedWebAPI.Models;
 using NorthwindBasedWebAPI.Models.Common;
 using NorthwindBasedWebAPI.Models.Dtos.AuthDtos;
 using NorthwindBasedWebAPI.Repositories.IRepository;
-using NorthwindBasedWebApplication.API.Models;
 using System.Net;
 
 namespace NorthwindBasedWebAPI.Controllers
