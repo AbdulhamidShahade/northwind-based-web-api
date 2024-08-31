@@ -12,6 +12,8 @@ using NorthwindBasedWebAPI.Models.Dtos.RegionDtos;
 using NorthwindBasedWebAPI.Models.Dtos.ShipperDtos;
 using NorthwindBasedWebAPI.Models.Dtos.SupplierDtos;
 using NorthwindBasedWebAPI.Models.Dtos.TerritoryDtos;
+using NorthwindBasedWebAPI.Models.Common;
+using NorthwindBasedWebAPI.Models.Dtos.UserDtos;
 
 namespace NorthwindBasedWebAPI.Common.Profiles
 {
@@ -72,6 +74,12 @@ namespace NorthwindBasedWebAPI.Common.Profiles
             CreateMap<Territory, ReadTerritoryDto>().ReverseMap();
             CreateMap<Territory, UpdateTerritoryDto>().ReverseMap();
             CreateMap<Territory, CreateTerritoryDto>().ReverseMap();
+
+
+            CreateMap<ApplicationUser, UserDto>().ReverseMap();
+
+
+            CreateMap<RoleDto, ApplicationRole>().ReverseMap();
         }
     }
 }

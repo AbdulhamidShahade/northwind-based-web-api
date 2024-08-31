@@ -18,7 +18,7 @@ namespace NorthwindBasedWebAPI.Models.Base
                 return DateTime.UtcNow;
             }
         }
-        public DateTime? UpdatedAt
+        public virtual DateTime? UpdatedAt
         {
             set
             {

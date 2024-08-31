@@ -13,7 +13,7 @@ namespace NorthwindBasedWebAPI.Repositories.Repository
 
             List<SystemLog> systemLogs = new List<SystemLog>();
 
-            SqlConnection conn = new SqlConnection("Server=.;Database=northwind-based-web-api;Trusted_Connection=True;");
+            SqlConnection conn = new SqlConnection("Server=ABDULHAMIT;Database=northwind-based-web-api;Trusted_Connection=True;");
 
             string query = "SELECT * FROM SystemLogs";
 
