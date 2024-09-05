@@ -4,6 +4,7 @@ using NorthwindBasedWebAPI.Data;
 using NorthwindBasedWebAPI.Models;
 using NorthwindBasedWebAPI.Repositories.IRepository;
 
+
 namespace NorthwindBasedWebApplication.API.Repositories.Repository
 {
     public class UserRepository : IUserRepository
@@ -46,6 +47,11 @@ namespace NorthwindBasedWebApplication.API.Repositories.Repository
             return users;
         }
 
+        public Task<ApplicationUser> GetByEmailAsync(string email)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<ApplicationUser> GetByIdAsync(int id)
         {
             var user = _context.ApplicationUsers.Where(i => i.Id == id).FirstOrDefaultAsync();
@@ -53,7 +59,10 @@ namespace NorthwindBasedWebApplication.API.Repositories.Repository
             return user;
         }
 
-       
+        public Task<bool> IsAuthenticatedUser(string? email = null, string? userName = null)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task<bool> IsExistsAsync(int id)
         {
