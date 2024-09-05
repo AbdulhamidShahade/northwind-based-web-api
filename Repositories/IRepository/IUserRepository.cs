@@ -13,5 +13,6 @@ namespace NorthwindBasedWebAPI.Repositories.IRepository
         Task<bool> IsExistsAsync(string email);
         Task<bool> ChangePasswordAsync(ApplicationUser user, string currentPassword, string newPassword);
         Task<bool> UpdateAsync(ApplicationUser user);
+        Task<bool> IsAuthenticatedUser(string? email = null, string? userName = null);
     }
 }
