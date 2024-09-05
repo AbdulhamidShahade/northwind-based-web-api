@@ -17,6 +17,10 @@ namespace NorthwindBasedWebAPI.Repositories.IRepository
         Task<bool> IsExistsAsync(int id);
 
         Task<UserRolesResponse> GetRolesByUser(int id);
+        Task<UserRolesResponse> GetRolesByUser(string email);
+        Task<List<string>> GetRolesNamesByUser(int id);
+        Task<List<string>> GetRolesNamesByUser(string email);
+
         Task<UserClaimsResponse> GetClaimsByUser(int id);
         
     }
