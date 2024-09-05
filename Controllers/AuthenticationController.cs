@@ -126,5 +126,20 @@ namespace NorthwindBasedWebAPI.Controllers
 
             return Ok(_response);
         }
+
+
+        //public async Task<ActionResult<ApiResponse>> IsAuthenticated(string email)
+        //{
+        //    if(_authenticationUserRepository.IsAuthenticatedUser(email))
+        //    {
+        //        _response.IsSuccess = true;
+        //        return Ok(email);
+        //    }
+        //    else
+        //    {
+        //        _response.IsSuccess = false;
+        //        return BadRequest(_response);
+        //    }
+        //}
     }
 }
