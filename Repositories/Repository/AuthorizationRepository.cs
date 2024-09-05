@@ -117,9 +117,56 @@ namespace NorthwindBasedWebApplication.API.Repositories.Repository
             return response;
         }
 
-        public Task<bool> IsExistsAsync(string role)
+
+        public async Task<UserRolesResponse> GetRolesByUser(string email)
         {
-            return _roleManager.RoleExistsAsync(role);
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if(user == null)
+            {
+                return null;
+            }
+            
+            var roles = new List<UserRole>();
+
+            var response = new UserRolesResponse();
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            var rolesList = await _roleManager.Roles.ToListAsync();
+
+            response.UserId = user.Id;
+
+            foreach(var role in rolesList)
+            {
+                roles.Add(new UserRole
+                {
+                    Id = Convert.ToInt32(role.Id),
+                    Name = role.Name,
+                    HasRole = userRoles.Contains(role.Name)
+
+                });
+            }
+
+            response.Roles = roles;
+
+            return response;
+
+        }
+
+        public async Task<List<string>> GetRolesNamesByUser(int id)
+        {
+            return GetRolesByUser(id).GetAwaiter().GetResult().Roles.Where(h => h.HasRole).Select(n => n.Name).ToList();
+        }
+
+        public async Task<List<string>> GetRolesNamesByUser(string email)
+        {
+            return GetRolesByUser(email).GetAwaiter().GetResult().Roles.Where(h => h.HasRole).Select(n => n.Name).ToList();
+        }
+
+        public async Task<bool> IsExistsAsync(string role)
+        {
+            return await _roleManager.RoleExistsAsync(role);
         }
 
         public async Task<bool> IsExistsAsync(int id)
