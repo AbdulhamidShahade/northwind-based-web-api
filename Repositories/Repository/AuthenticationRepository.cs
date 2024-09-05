@@ -23,6 +23,7 @@ namespace NorthwindBasedWebApplication.API.Repositories.Repository
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly string _key;
+        private readonly IHttpContextAccessor _contextAccessor;
 
         public AuthenticationRepository(UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager, ApplicationDbContext context,
@@ -36,6 +37,20 @@ namespace NorthwindBasedWebApplication.API.Repositories.Repository
 ;
         }
 
+        public Task<ApplicationUser> GetByEmailAsync(string email)
+        {
+            return _userManager.FindByEmailAsync(email);
+        }
+
+        public Task<ApplicationUser> GetByUserNameAsync(string name)
+        {
+            return _userManager.FindByNameAsync(name);
+        }
+
+        public bool IsAuthenticatedUser(string? email = null, string? userName = null)
+        {
+            return _contextAccessor.HttpContext.User.Identity.IsAuthenticated;
+        }
 
         public async Task<bool> IsUniqueUser(UserDto user) 
             => !await _context.ApplicationUsers.Where(e => e.Email == user.Email).AnyAsync();
