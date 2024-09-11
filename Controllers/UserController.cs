@@ -8,7 +8,8 @@ namespace NorthwindBasedWebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
+    [AllowAnonymous]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
