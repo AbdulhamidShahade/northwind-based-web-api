@@ -36,7 +36,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Customer")]
+        //[Authorize(Roles = "Admin,Customer")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetRegions()
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
@@ -136,7 +137,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [Authorize(Roles = "Admin,Customer")]
+        //[Authorize(Roles = "Admin,Customer")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetRegion(int id)
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
@@ -300,7 +302,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> CreateRegion([FromBody]CreateRegionDto model)
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
@@ -467,7 +470,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> UpdateRegion(int id, 
             [FromBody]UpdateRegionDto updateRegionDto)
         {
@@ -701,7 +705,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> DeleteRegion(int id)
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
@@ -897,7 +902,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpGet]
         [Route("{id}/Territories")]
-        [Authorize(Roles = "Admin,Customer")]
+        //[Authorize(Roles = "Admin,Customer")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetTerritoriesByRegion(int id)
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
