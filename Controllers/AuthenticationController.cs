@@ -5,6 +5,7 @@ using NorthwindBasedWebAPI.Models;
 using NorthwindBasedWebAPI.Models.Common;
 using NorthwindBasedWebAPI.Models.Dtos.AuthDtos;
 using NorthwindBasedWebAPI.Repositories.IRepository;
+using NorthwindBasedWebAPI.Services.IService;
 using System.Net;
 
 namespace NorthwindBasedWebAPI.Controllers
@@ -18,14 +19,16 @@ namespace NorthwindBasedWebAPI.Controllers
         private readonly ApiResponse _response;
         private readonly ILogger<AuthenticationController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IGlobal _global;
 
         public AuthenticationController(IAuthenticationRepository authenticationUserRepository, ILogger<AuthenticationController> logger,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager, IGlobal global)
         {
             _authenticationUserRepository = authenticationUserRepository;
             _response = new();
             _logger = logger;
             _userManager = userManager;
+            _global = global;
         }
 
 
@@ -69,6 +72,7 @@ namespace NorthwindBasedWebAPI.Controllers
             _response.IsSuccess = true;
             _response.StatusCode = HttpStatusCode.OK;
             _response.data = loginUser;
+            _global.Email = loginRequestDto.Email;
 
             return Ok(_response);
         }
@@ -88,14 +92,7 @@ namespace NorthwindBasedWebAPI.Controllers
                 return BadRequest(_response);
             }
 
-            if (!await _authenticationUserRepository.IsUniqueUser(registerRequestDto.user))
-            {
-                _response.ErrorMessages.Add("The user is not unique!");
-                _response.IsSuccess = false;
-                _response.StatusCode = HttpStatusCode.BadRequest;
-
-                return BadRequest(_response);
-            }
+          
 
 
             var registeredUser = await _authenticationUserRepository.Register(registerRequestDto);
@@ -110,14 +107,8 @@ namespace NorthwindBasedWebAPI.Controllers
                 return BadRequest(_response);
             }
 
-            if (string.IsNullOrWhiteSpace(registeredUser.Email))
-            {
-                _response.ErrorMessages.Add("Failed with something!");
-                _response.IsSuccess = false;
-                _response.StatusCode = HttpStatusCode.BadRequest;
+            var user = await _userManager.FindByEmailAsync(registeredUser.Email);
 
-                return BadRequest(_response);
-            }
 
 
             _response.IsSuccess = true;
