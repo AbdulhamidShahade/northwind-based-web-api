@@ -37,7 +37,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Customer")]
+        //[Authorize(Roles = "Admin,Customer")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetTerritories()
         {
 
@@ -115,8 +116,8 @@ namespace NorthwindBasedWebAPI.Controllers
                  .SetDetails($"{nameof(TerritoriesController)}/{nameof(GetTerritories)}")
                  .SetStatusCode(HttpStatusCode.OK.ToString())
                  .SetMethodType("GET")
-                 .SetRole(roleClaims.First().Value.ToString())
-                 .SetUser(user.Identity.Name.ToString())
+                 .SetRole("")
+                 .SetUser("")
                  .Build();
 
 
@@ -137,7 +138,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [Authorize(Roles = "Admin,Customer")]
+        //[Authorize(Roles = "Admin,Customer")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetTerritory(int id)
         {
 
@@ -298,7 +300,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> CreateTerritory(
             [FromQuery] int regionId, [FromBody] CreateTerritoryDto createTerritoryDto)
         {
@@ -470,7 +473,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> UpdateTerritory(int id,
             [FromQuery] int regionId, [FromBody] UpdateTerritoryDto updateTerritoryDto)
         {
@@ -709,7 +713,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> DeleteTerritory(int id)
         {
 
@@ -904,7 +909,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpGet]
         [Route("{id}/Employees")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetEmployeesByTerritory(int id)
         {
 
@@ -1059,7 +1065,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpGet]
         [Route("{id:int}/Region")]
-        [Authorize(Roles = "Admin,Customer")]
+        //[Authorize(Roles = "Admin,Customer")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetRegionByTerritory(int id)
         {
 
