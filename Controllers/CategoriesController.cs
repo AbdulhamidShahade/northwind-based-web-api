@@ -8,6 +8,7 @@ using NorthwindBasedWebAPI.Models.Common;
 using NorthwindBasedWebAPI.Models;
 using NorthwindBasedWebAPI.Models.Dtos.CategoryDtos;
 using NorthwindBasedWebAPI.Models.Dtos.ProductDtos;
+using NorthwindBasedWebAPI.Shared;
 
 namespace NorthwindBasedWebAPI.Controllers
 {
@@ -23,22 +24,22 @@ namespace NorthwindBasedWebAPI.Controllers
         private readonly IMapper _mapper;
         private readonly ILogger<CategoriesController> _logger;
         private readonly LoggingModelBuilder _loggingModelBuilder;
+        private readonly IGlobal _global;
 
 
 
-
-        public CategoriesController(ICategoryRepository categoryRepository, IMapper mapper, ILogger<CategoriesController> logger)
+        public CategoriesController(ICategoryRepository categoryRepository, IMapper mapper, ILogger<CategoriesController> logger, IGlobal global)
         {
             _categoryRepository = categoryRepository;
             _response = new();
             _mapper = mapper;
             _logger = logger;
             _loggingModelBuilder = new();
+            _global = global;
         }
 
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Customer")]
 
         public async Task<ActionResult<ApiResponse>> GetCategories()
         {
@@ -151,8 +152,8 @@ namespace NorthwindBasedWebAPI.Controllers
                 .SetSuccess()
                 .SetDetails($"{nameof(CategoriesController)}/{nameof(GetCategories)}")
                 .SetStatusCode(HttpStatusCode.OK.ToString())
-                .SetRole(roleClaims.First().Value.ToString())
-                .SetUser(user.Identity.Name.ToString())
+                .SetRole(await _globalShared.GetUserRole(_global.Email))
+                .SetUser(_global.Email)
                 .Build();
 
             _logger.LogInformation("{Details}|{StatusCode}|{MethodType}|{User}|{Role}|{Success}{Failed}|{ErrorMessage}",
@@ -176,7 +177,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        [Authorize(Roles = "Admin,Customer")]
+        //[Authorize(Roles = "Admin,Customer")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetCategory(int id)
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
@@ -340,7 +342,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> CreateCategory(CreateCategoryDto createCategoryDto)
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
@@ -504,7 +507,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> UpdateCategory(int id, UpdateCategoryDto updateCategoryDto)
         {
 
@@ -743,7 +747,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> DeleteCategory(int id)
         {
 
@@ -942,7 +947,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpGet]
         [Route("{id}/Products")]
-        [Authorize(Roles = "Admin,Customer")]
+        //[Authorize(Roles = "Admin,Customer")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetProductsByCategory(int id)
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
