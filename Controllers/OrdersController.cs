@@ -34,7 +34,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetOrders()
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
@@ -135,7 +136,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetOrder(int id)
         {
 
@@ -299,7 +301,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "Customer,Admin")]
+        //[Authorize(Roles = "Customer,Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> CreateOrder([FromQuery]int employeeId,
             [FromQuery]int shipVia, [FromQuery]int customerId, 
             [FromBody]CreateOrderDto createOrderDto)
@@ -442,7 +445,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> UpdateOrder(int id,
             [FromQuery]int employeeId, [FromQuery]int shipVia,
             [FromQuery]int customerId, [FromBody]UpdateOrderDto updateOrderDto)
@@ -680,7 +684,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> DeleteOrder(int id)
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
