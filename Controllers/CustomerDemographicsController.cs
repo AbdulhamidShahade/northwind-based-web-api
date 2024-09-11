@@ -36,7 +36,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Customer")]
+        //[Authorize(Roles = "Admin,Customer")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetCustomerDemographics()
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
@@ -165,7 +166,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [Authorize(Roles = "Admin,Customer")]
+        //[Authorize(Roles = "Admin,Customer")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetCustomerDemographic(int id)
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
@@ -328,7 +330,8 @@ namespace NorthwindBasedWebAPI.Controllers
         
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> CreateCustomerDemographic(CreateCustomerDemographicDto createCustomerDemographicDto)
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
@@ -491,7 +494,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> UpdateCustomerDemographic(int id, UpdateCustomerDemographicDto updateCustomerDemographicDto)
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
@@ -727,7 +731,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> DeleteCustomerDemographic(int id)
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
@@ -927,7 +932,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpGet]
         [Route("{id:int}/Customers")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetCustomersByTerritory(int id)
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
