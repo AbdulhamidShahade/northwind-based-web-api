@@ -721,6 +721,7 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpGet]
         [Route("User/{id:int}/Roles")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetRolesByUser(int id)
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
@@ -738,8 +739,8 @@ namespace NorthwindBasedWebAPI.Controllers
                 .SetStatusCode(HttpStatusCode.BadRequest.ToString())
                 .SetDetails($"{nameof(AuthorizationController)}/{nameof(GetRolesByUser)}")
                 .SetErrorMessage("The given id is invalid!")
-                .SetRole(roleClaims.First().Value.ToString())
-                .SetUser(user.Identity.Name.ToString())
+                .SetRole("")
+                .SetUser("")
                 .Build();
 
                 _logger.LogError("{Details}|{StatusCode}|{MethodType}|{User}|{Role}|{Success}{Failed}|{ErrorMessage}",
@@ -769,8 +770,8 @@ namespace NorthwindBasedWebAPI.Controllers
                 .SetStatusCode(HttpStatusCode.NotFound.ToString())
                 .SetDetails($"{nameof(AuthorizationController)}/{nameof(GetRolesByUser)}")
                 .SetErrorMessage("No user exists with the given id!")
-                .SetRole(roleClaims.First().Value.ToString())
-                .SetUser(user.Identity.Name.ToString())
+                .SetRole("")
+                .SetUser("")
                 .Build();
 
                 _logger.LogError("{Details}|{StatusCode}|{MethodType}|{User}|{Role}|{Success}{Failed}|{ErrorMessage}",
@@ -801,8 +802,8 @@ namespace NorthwindBasedWebAPI.Controllers
                 .SetStatusCode(HttpStatusCode.NotFound.ToString())
                 .SetDetails($"{nameof(AuthorizationController)}/{nameof(GetRolesByUser)}")
                 .SetErrorMessage("No roles found by given user!")
-                .SetRole(roleClaims.First().Value.ToString())
-                .SetUser(user.Identity.Name.ToString())
+                .SetRole("")
+                .SetUser("")
                 .Build();
 
                 _logger.LogError("{Details}|{StatusCode}|{MethodType}|{User}|{Role}|{Success}{Failed}|{ErrorMessage}",
@@ -832,8 +833,8 @@ namespace NorthwindBasedWebAPI.Controllers
                 .SetStatusCode(HttpStatusCode.InternalServerError.ToString())
                 .SetDetails($"{nameof(AuthorizationController)}/{nameof(GetRolesByUser)}")
                 .SetErrorMessage("Something went wrong while getting the roles by the user!")
-                .SetRole(roleClaims.First().Value.ToString())
-                .SetUser(user.Identity.Name.ToString())
+                .SetRole("")
+                .SetUser("")
                 .Build();
 
                 _logger.LogError("{Details}|{StatusCode}|{MethodType}|{Usre}|{Role}|{Success}{Failed}|{ErrorMessage}",
@@ -859,8 +860,8 @@ namespace NorthwindBasedWebAPI.Controllers
             .SetMethodType("GET")
             .SetStatusCode(HttpStatusCode.OK.ToString())
             .SetDetails($"{nameof(AuthorizationController)}/{nameof(GetRolesByUser)}")
-            .SetRole(roleClaims.First().Value.ToString())
-            .SetUser(user.Identity.Name.ToString())
+            .SetRole("")
+            .SetUser("")
             .Build();
 
             _logger.LogInformation("{Details}|{StatusCode}|{MethodType}|{User}|{Role}|{Success}{Failed}|{ErrorMessage}",
@@ -1036,5 +1037,324 @@ namespace NorthwindBasedWebAPI.Controllers
             return Ok(_response);
         }
 
+
+
+        [HttpGet]
+        [Route("User/{email}/Roles")]
+        [AllowAnonymous]
+        public async Task<ActionResult<ApiResponse>> GetRolesByUser(string email)
+        {
+            List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
+            ClaimsPrincipal user = this.User;
+
+            //if (id <= 0)
+            //{
+            //    _response.ErrorMessages.Add("The given id is invalid!");
+            //    _response.StatusCode = HttpStatusCode.BadRequest;
+            //    _response.IsSuccess = false;
+
+            //    _loggingModelBuilder
+            //    .SetFailed()
+            //    .SetMethodType("GET")
+            //    .SetStatusCode(HttpStatusCode.BadRequest.ToString())
+            //    .SetDetails($"{nameof(AuthorizationController)}/{nameof(GetRolesByUser)}")
+            //    .SetErrorMessage("The given id is invalid!")
+            //    .SetRole(roleClaims.First().Value.ToString())
+            //    .SetUser(user.Identity.Name.ToString())
+            //    .Build();
+
+            //    _logger.LogError("{Details}|{StatusCode}|{MethodType}|{User}|{Role}|{Success}{Failed}|{ErrorMessage}",
+            //        _loggingModelBuilder.Build().Details,
+            //        _loggingModelBuilder.Build().StatusCode,
+            //        _loggingModelBuilder.Build().MethodType,
+            //        _loggingModelBuilder.Build().User,
+            //        _loggingModelBuilder.Build().Role,
+            //        _loggingModelBuilder.Build().Success,
+            //        _loggingModelBuilder.Build().Failed,
+            //        _loggingModelBuilder.Build().ErrorMessage);
+
+
+            //    return BadRequest(_response);
+            //}
+
+
+            if (!await _userRepository.IsExistsAsync(email))
+            {
+                _response.ErrorMessages.Add("No user exists with the given email!");
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.IsSuccess = false;
+
+                _loggingModelBuilder
+                .SetFailed()
+                .SetMethodType("GET")
+                .SetStatusCode(HttpStatusCode.NotFound.ToString())
+                .SetDetails($"{nameof(AuthorizationController)}/{nameof(GetRolesByUser)}")
+                .SetErrorMessage("No user exists with the given id!")
+                .SetRole("")
+                .SetUser("")
+                .Build();
+
+                _logger.LogError("{Details}|{StatusCode}|{MethodType}|{User}|{Role}|{Success}{Failed}|{ErrorMessage}",
+                    _loggingModelBuilder.Build().Details,
+                    _loggingModelBuilder.Build().StatusCode,
+                    _loggingModelBuilder.Build().MethodType,
+                    _loggingModelBuilder.Build().User,
+                    _loggingModelBuilder.Build().Role,
+                    _loggingModelBuilder.Build().Success,
+                    _loggingModelBuilder.Build().Failed,
+                    _loggingModelBuilder.Build().ErrorMessage);
+
+
+                return BadRequest(_response);
+            }
+
+            var roles = await _authorizationRepository.GetRolesByUser(email);
+
+            if (roles.Roles.Count == 0)
+            {
+                _response.ErrorMessages.Add("No roles found by given user!");
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.IsSuccess = false;
+
+                _loggingModelBuilder
+                .SetFailed()
+                .SetMethodType("GET")
+                .SetStatusCode(HttpStatusCode.NotFound.ToString())
+                .SetDetails($"{nameof(AuthorizationController)}/{nameof(GetRolesByUser)}")
+                .SetErrorMessage("No roles found by given user!")
+                .SetRole("")
+                .SetUser("")
+                .Build();
+
+                _logger.LogError("{Details}|{StatusCode}|{MethodType}|{User}|{Role}|{Success}{Failed}|{ErrorMessage}",
+                    _loggingModelBuilder.Build().Details,
+                    _loggingModelBuilder.Build().StatusCode,
+                    _loggingModelBuilder.Build().MethodType,
+                    _loggingModelBuilder.Build().User,
+                    _loggingModelBuilder.Build().Role,
+                    _loggingModelBuilder.Build().Success,
+                    _loggingModelBuilder.Build().Failed,
+                    _loggingModelBuilder.Build().ErrorMessage);
+
+
+                return BadRequest(_response);
+            }
+
+
+            if (roles == null)
+            {
+                _response.ErrorMessages.Add("Something went wrong while getting the roles by the user!");
+                _response.StatusCode = HttpStatusCode.InternalServerError;
+                _response.IsSuccess = false;
+
+                _loggingModelBuilder
+                .SetFailed()
+                .SetMethodType("GET")
+                .SetStatusCode(HttpStatusCode.InternalServerError.ToString())
+                .SetDetails($"{nameof(AuthorizationController)}/{nameof(GetRolesByUser)}")
+                .SetErrorMessage("Something went wrong while getting the roles by the user!")
+                .SetRole("")
+                .SetUser("")
+                .Build();
+
+                _logger.LogError("{Details}|{StatusCode}|{MethodType}|{Usre}|{Role}|{Success}{Failed}|{ErrorMessage}",
+                    _loggingModelBuilder.Build().Details,
+                    _loggingModelBuilder.Build().StatusCode,
+                    _loggingModelBuilder.Build().MethodType,
+                    _loggingModelBuilder.Build().User,
+                    _loggingModelBuilder.Build().Role,
+                    _loggingModelBuilder.Build().Success,
+                    _loggingModelBuilder.Build().Failed,
+                    _loggingModelBuilder.Build().ErrorMessage);
+
+
+                return BadRequest(_response);
+            }
+
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.IsSuccess = true;
+            _response.data = roles;
+
+            _loggingModelBuilder
+            .SetFailed()
+            .SetMethodType("GET")
+            .SetStatusCode(HttpStatusCode.OK.ToString())
+            .SetDetails($"{nameof(AuthorizationController)}/{nameof(GetRolesByUser)}")
+            .SetRole("")
+            .SetUser("")
+            .Build();
+
+            _logger.LogInformation("{Details}|{StatusCode}|{MethodType}|{User}|{Role}|{Success}{Failed}|{ErrorMessage}",
+                _loggingModelBuilder.Build().Details,
+                _loggingModelBuilder.Build().StatusCode,
+                _loggingModelBuilder.Build().MethodType,
+                _loggingModelBuilder.Build().User,
+                _loggingModelBuilder.Build().Role,
+                _loggingModelBuilder.Build().Success,
+                _loggingModelBuilder.Build().Failed,
+                _loggingModelBuilder.Build().ErrorMessage);
+
+
+            return Ok(_response);
+        }
+
+        [HttpGet]
+        [Route("User/{email}/Roles/Names")]
+        [AllowAnonymous]
+        public async Task<ActionResult<ApiResponse>> GetRolesNamesByUser(string email)
+        {
+            List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
+            ClaimsPrincipal user = this.User;
+
+            //if (id <= 0)
+            //{
+            //    _response.ErrorMessages.Add("The given id is invalid!");
+            //    _response.StatusCode = HttpStatusCode.BadRequest;
+            //    _response.IsSuccess = false;
+
+            //    _loggingModelBuilder
+            //    .SetFailed()
+            //    .SetMethodType("GET")
+            //    .SetStatusCode(HttpStatusCode.BadRequest.ToString())
+            //    .SetDetails($"{nameof(AuthorizationController)}/{nameof(GetRolesByUser)}")
+            //    .SetErrorMessage("The given id is invalid!")
+            //    .SetRole(roleClaims.First().Value.ToString())
+            //    .SetUser(user.Identity.Name.ToString())
+            //    .Build();
+
+            //    _logger.LogError("{Details}|{StatusCode}|{MethodType}|{User}|{Role}|{Success}{Failed}|{ErrorMessage}",
+            //        _loggingModelBuilder.Build().Details,
+            //        _loggingModelBuilder.Build().StatusCode,
+            //        _loggingModelBuilder.Build().MethodType,
+            //        _loggingModelBuilder.Build().User,
+            //        _loggingModelBuilder.Build().Role,
+            //        _loggingModelBuilder.Build().Success,
+            //        _loggingModelBuilder.Build().Failed,
+            //        _loggingModelBuilder.Build().ErrorMessage);
+
+
+            //    return BadRequest(_response);
+            //}
+
+
+            if (!await _userRepository.IsExistsAsync(email))
+            {
+                _response.ErrorMessages.Add("No user exists with the given email!");
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.IsSuccess = false;
+
+                _loggingModelBuilder
+                .SetFailed()
+                .SetMethodType("GET")
+                .SetStatusCode(HttpStatusCode.NotFound.ToString())
+                .SetDetails($"{nameof(AuthorizationController)}/{nameof(GetRolesByUser)}")
+                .SetErrorMessage("No user exists with the given id!")
+                .SetRole("")
+                .SetUser("")
+                .Build();
+
+                _logger.LogError("{Details}|{StatusCode}|{MethodType}|{User}|{Role}|{Success}{Failed}|{ErrorMessage}",
+                    _loggingModelBuilder.Build().Details,
+                    _loggingModelBuilder.Build().StatusCode,
+                    _loggingModelBuilder.Build().MethodType,
+                    _loggingModelBuilder.Build().User,
+                    _loggingModelBuilder.Build().Role,
+                    _loggingModelBuilder.Build().Success,
+                    _loggingModelBuilder.Build().Failed,
+                    _loggingModelBuilder.Build().ErrorMessage);
+
+
+                return BadRequest(_response);
+            }
+
+            var roles = await _authorizationRepository.GetRolesNamesByUser(email);
+
+            if (roles.Count == 0)
+            {
+                _response.ErrorMessages.Add("No roles found by given user!");
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.IsSuccess = false;
+
+                _loggingModelBuilder
+                .SetFailed()
+                .SetMethodType("GET")
+                .SetStatusCode(HttpStatusCode.NotFound.ToString())
+                .SetDetails($"{nameof(AuthorizationController)}/{nameof(GetRolesByUser)}")
+                .SetErrorMessage("No roles found by given user!")
+                .SetRole("")
+                .SetUser("")
+                .Build();
+
+                _logger.LogError("{Details}|{StatusCode}|{MethodType}|{User}|{Role}|{Success}{Failed}|{ErrorMessage}",
+                    _loggingModelBuilder.Build().Details,
+                    _loggingModelBuilder.Build().StatusCode,
+                    _loggingModelBuilder.Build().MethodType,
+                    _loggingModelBuilder.Build().User,
+                    _loggingModelBuilder.Build().Role,
+                    _loggingModelBuilder.Build().Success,
+                    _loggingModelBuilder.Build().Failed,
+                    _loggingModelBuilder.Build().ErrorMessage);
+
+
+                return BadRequest(_response);
+            }
+
+
+            if (roles == null)
+            {
+                _response.ErrorMessages.Add("Something went wrong while getting the roles by the user!");
+                _response.StatusCode = HttpStatusCode.InternalServerError;
+                _response.IsSuccess = false;
+
+                _loggingModelBuilder
+                .SetFailed()
+                .SetMethodType("GET")
+                .SetStatusCode(HttpStatusCode.InternalServerError.ToString())
+                .SetDetails($"{nameof(AuthorizationController)}/{nameof(GetRolesByUser)}")
+                .SetErrorMessage("Something went wrong while getting the roles by the user!")
+                .SetRole("")
+                .SetUser("")
+                .Build();
+
+                _logger.LogError("{Details}|{StatusCode}|{MethodType}|{Usre}|{Role}|{Success}{Failed}|{ErrorMessage}",
+                    _loggingModelBuilder.Build().Details,
+                    _loggingModelBuilder.Build().StatusCode,
+                    _loggingModelBuilder.Build().MethodType,
+                    _loggingModelBuilder.Build().User,
+                    _loggingModelBuilder.Build().Role,
+                    _loggingModelBuilder.Build().Success,
+                    _loggingModelBuilder.Build().Failed,
+                    _loggingModelBuilder.Build().ErrorMessage);
+
+
+                return BadRequest(_response);
+            }
+
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.IsSuccess = true;
+            _response.data = roles;
+
+            _loggingModelBuilder
+            .SetFailed()
+            .SetMethodType("GET")
+            .SetStatusCode(HttpStatusCode.OK.ToString())
+            .SetDetails($"{nameof(AuthorizationController)}/{nameof(GetRolesByUser)}")
+            .SetRole("")
+            .SetUser("")
+            .Build();
+
+            _logger.LogInformation("{Details}|{StatusCode}|{MethodType}|{User}|{Role}|{Success}{Failed}|{ErrorMessage}",
+                _loggingModelBuilder.Build().Details,
+                _loggingModelBuilder.Build().StatusCode,
+                _loggingModelBuilder.Build().MethodType,
+                _loggingModelBuilder.Build().User,
+                _loggingModelBuilder.Build().Role,
+                _loggingModelBuilder.Build().Success,
+                _loggingModelBuilder.Build().Failed,
+                _loggingModelBuilder.Build().ErrorMessage);
+
+
+            return Ok(roles);
+        }
     }
 }
