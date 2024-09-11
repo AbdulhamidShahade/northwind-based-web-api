@@ -38,7 +38,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Customer")]
+        //[Authorize(Roles = "Admin,Customer")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetProducts()
         {
             List<Claim> roleClaims = HttpContext.User.FindAll(ClaimTypes.Role.ToString()).ToList();
@@ -56,8 +57,8 @@ namespace NorthwindBasedWebAPI.Controllers
                    .SetStatusCode(HttpStatusCode.BadRequest.ToString())
                    .SetMethodType("GET")
                    .SetErrorMessage("The model state is invalid!")
-                   .SetRole(roleClaims.First().Value.ToString())
-                   .SetUser(user.Identity.Name.ToString())
+                   .SetRole("")
+                   .SetUser("")
                    .Build();
 
 
@@ -91,8 +92,8 @@ namespace NorthwindBasedWebAPI.Controllers
                    .SetStatusCode(HttpStatusCode.InternalServerError.ToString())
                    .SetMethodType("GET")
                    .SetErrorMessage("Something went wrong while getting the products")
-                   .SetRole(roleClaims.First().Value.ToString())
-                   .SetUser(user.Identity.Name.ToString())
+                   .SetRole("")
+                   .SetUser("")
                    .Build();
 
 
@@ -120,8 +121,8 @@ namespace NorthwindBasedWebAPI.Controllers
                    .SetDetails($"{nameof(ProductsController)}/{nameof(GetProducts)}")
                    .SetStatusCode(HttpStatusCode.InternalServerError.ToString())
                    .SetMethodType("GET")
-                   .SetRole(roleClaims.First().Value.ToString())
-                   .SetUser(user.Identity.Name.ToString())
+                   .SetRole("")
+                   .SetUser("")
                    .Build();
 
 
@@ -141,7 +142,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
 
         [HttpGet("{id:int}")]
-        [Authorize(Roles = "Admin,Customer")]
+        //[Authorize(Roles = "Admin,Customer")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetProduct(int id)
         {
 
@@ -160,8 +162,8 @@ namespace NorthwindBasedWebAPI.Controllers
                    .SetStatusCode(HttpStatusCode.BadRequest.ToString())
                    .SetMethodType("GET")
                    .SetErrorMessage("The model states is invalid")
-                   .SetRole(roleClaims.First().Value.ToString())
-                   .SetUser(user.Identity.Name.ToString())
+                   .SetRole("")
+                   .SetUser("")
                    .Build();
 
 
@@ -190,8 +192,8 @@ namespace NorthwindBasedWebAPI.Controllers
                    .SetStatusCode(HttpStatusCode.BadRequest.ToString())
                    .SetMethodType("GET")
                    .SetErrorMessage("The given id is invalid")
-                   .SetRole(roleClaims.First().Value.ToString())
-                   .SetUser(user.Identity.Name.ToString())
+                   .SetRole("")
+                   .SetUser("")
                    .Build();
 
 
@@ -221,8 +223,8 @@ namespace NorthwindBasedWebAPI.Controllers
                    .SetStatusCode(HttpStatusCode.NotFound.ToString())
                    .SetMethodType("GET")
                    .SetErrorMessage("No product found with given id!")
-                   .SetRole(roleClaims.First().Value.ToString())
-                   .SetUser(user.Identity.Name.ToString())
+                   .SetRole("")
+                   .SetUser("")
                    .Build();
 
                 _logger.LogError("{Details}|{StatusCode}|{MethodType}|{User}|{Role}|{Success}{Failed}|{ErrorMessage}",
@@ -253,8 +255,8 @@ namespace NorthwindBasedWebAPI.Controllers
                    .SetStatusCode(HttpStatusCode.NotFound.ToString())
                    .SetMethodType("GET")
                    .SetErrorMessage("Something went wrong while getting the product")
-                   .SetRole(roleClaims.First().Value.ToString())
-                   .SetUser(user.Identity.Name.ToString())
+                   .SetRole("")
+                   .SetUser("")
                    .Build();
 
                 _logger.LogError("{Details}|{StatusCode}|{MethodType}|{User}|{Role}|{Success}{Failed}|{ErrorMessage}",
@@ -282,8 +284,8 @@ namespace NorthwindBasedWebAPI.Controllers
                    .SetDetails($"{nameof(ProductsController)}/{nameof(GetProduct)}")
                    .SetStatusCode(HttpStatusCode.OK.ToString())
                    .SetMethodType("GET")
-                   .SetRole(roleClaims.First().Value.ToString())
-                   .SetUser(user.Identity.Name.ToString())
+                   .SetRole("")
+                   .SetUser("")
                    .Build();
 
 
@@ -304,7 +306,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> CreateProduct([FromQuery]int categoryId,
             [FromQuery]int supplierId, [FromBody]CreateProductDto createProductDto)
         {
@@ -481,7 +484,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> UpdateProduct(int id, 
             [FromQuery]int categoryId, [FromQuery] int supplierId, UpdateProductDto updateProductDto)
         {
@@ -718,7 +722,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> DeleteProduct(int id)
         {
 
@@ -918,7 +923,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpGet]
         [Route("{id}/Category")]
-        [Authorize(Roles = "Admin,Customer")]
+        //[Authorize(Roles = "Admin,Customer")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetCategoryByProduct(int id)
         {
 
@@ -1052,7 +1058,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpGet]
         [Route("{id}/Supplier")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetSupplierByProduct(int id)
         {
 
@@ -1187,7 +1194,8 @@ namespace NorthwindBasedWebAPI.Controllers
 
         [HttpGet]
         [Route("{id}/Orders")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse>> GetOrdersByProduct(int id)
         {
 
